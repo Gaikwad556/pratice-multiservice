@@ -6,17 +6,18 @@ services:
     ports:
       - "4200:4200"
     container_name: client_container
+    restart: always
     depends_on:
-      - webapi
       - api
+      - webapi
 
   api:
     build:
       context: ./nodeapi
-    restart: always
     ports:
       - "5000:5000"
     container_name: nodeapi_container
+    restart: always
     depends_on:
       - emongo
       - nginx
@@ -36,24 +37,15 @@ services:
     container_name: nginx_container
     ports:
       - "80:80"
-    restart: always
-    volumes:
-      - "./nginx/default.conf:/etc/nginx/conf.d/default.conf"
-
-  emongo:
     
+  emongo:
     image: mongo:4
-    container_name: mongo_container
     ports:
       - "27017:27017"
-    environment:
-      - MONGO_INITDB_DATABASE=epoc
-    
+    container_name: emongo_container
+
   emartdb:
     image: mysql:8.0.33
-    container_name: mysql_container
     ports:
       - "3306:3306"
-    environment:
-      - MYSQL_ROOT_PASSWORD=emartdbpass
-      - MYSQL_DATABASE=books
+    container_name: mysql_container

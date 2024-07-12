@@ -5,6 +5,6 @@ RUN cd nodeapi && npm install
 
 FROM node:14
 WORKDIR /usr/src/app
-COPY --from=BUILD_NODEAPI /usr/src/app/nodeapi/ ./
+COPY --from=BUILD_NODEAPI /usr/src/app/nodeapi ./
 EXPOSE 5000
-CMD ["/bin/sh","-c","/usr/src/app/ && npm start"]
+CMD ["/bin/sh","-c","cd /usr/src/app/ && npm start"]

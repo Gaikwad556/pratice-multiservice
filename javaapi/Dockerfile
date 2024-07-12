@@ -1,11 +1,11 @@
 FROM openjdk:8 AS BUILD_JAVA
-WORKDIR /usr/src/app/
+WORKDIR /usr/src/app
 RUN apt update && apt install maven -y
-COPY ./ /usr/src/app/
+COPY ./ /usr/src/app
 RUN mvn install -DskipTests
 
 FROM openjdk:8
-WORKDIR /usr/src/app/
+WORKDIR /usr/src/app
 COPY --from=BUILD_JAVA /usr/src/app/target/book-work-0.0.1-SNAPSHOT.jar ./book-work-0.0.1.jar
 EXPOSE 9000
-ENTRYPOINT ["java","-jar","book-work-0.0.1.jar"]
+ENTRYPOINT ["java", "-jar", "book-work-0.0.1.jar"]
