@@ -41,7 +41,7 @@ services:
       - "./nginx/default.conf:/etc/nginx/conf.d/default.conf"
 
   emongo:
-    restart: always
+    
     image: mongo:4
     container_name: mongo_container
     ports:
@@ -51,7 +51,6 @@ services:
     
   emartdb:
     image: mysql:8.0.33
-    restart: always
     container_name: mysql_container
     ports:
       - "3306:3306"
