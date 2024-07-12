@@ -30,7 +30,7 @@ services:
       - mysql
 
   nginx:
-    image: ngnix:latest
+    image: nginx:latest
     container_name: nginx_container
     ports:
       - "80:80"
