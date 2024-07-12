@@ -1,8 +1,8 @@
 FROM openjdk:8 AS BUILD_JAVA
 WORKDIR /usr/src/app/
 RUN apt update && apt install maven -y
-COPY ./ ./
-RUN mvn install
+COPY ./ /usr/src/app/
+RUN mvn install -DskipTests
 
 FROM openjdk:8
 WORKDIR /usr/src/app/
