@@ -1,57 +1,53 @@
-version: "3.8"
-
+version: '3.8'
 services:
   client:
     build:
       context: ./client
     ports:
       - "4200:4200"
-    container_name: client
+    container_name: client_container
     depends_on:
-      - api
-      - webapi
+      - javaapi
+      - nodeapi
 
-  api:
+  nodeapi:
     build:
       context: ./nodeapi
     ports:
       - "5000:5000"
-    restart: always
-    container_name: api
+    container_name: nodeapi_container
     depends_on:
+      - mongodb
       - nginx
-      - emongo
 
-  webapi:
+  javaapi:
     build:
       context: ./javaapi
     ports:
       - "9000:9000"
-    restart: always
-    container_name: webapi
+    container_name: javaapi_container
     depends_on:
-      - emartdb
+      - mysql
 
   nginx:
-    restart: always
-    image: nginx:latest
-    container_name: nginx
-    volumes:
-      - "./nginx/default.conf:/etc/nginx/conf.d/default.conf"
+    image: ngnix:latest
+    container_name: nginx_container
     ports:
       - "80:80"
+    volumes:
+      - "./nginx/default.conf:/etc/nginx/conf.d/default.conf"
 
-  emongo:
+  mongodb:
     image: mongo:4
-    container_name: emongo
-    environment:
-      - MONGO_INITDB_DATABASE=epoc
+    container_name: mongo_container
     ports:
       - "27017:27017"
-
-  emartdb:
+    environment:
+      - MONGO_INITDB_DATABASE=epoc
+    
+  mysql:
     image: mysql:8.0.33
-    container_name: emartdb
+    container_name: mysql_container
     ports:
       - "3306:3306"
     environment:
